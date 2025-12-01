@@ -1,0 +1,4 @@
+# Em caso de sucesso, test de uma rua -- local
+POST http://localhost:8080/tolken HTTP/1.1
+Host: localhost:8080
+Content-Type: application/json

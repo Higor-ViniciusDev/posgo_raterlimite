@@ -3,6 +3,7 @@ package policy_entity
 import (
 	"os"
 	"strconv"
+	"time"
 )
 
 type Policy struct {
@@ -10,6 +11,7 @@ type Policy struct {
 	WindowPerSecond  int64
 	TTL              int64
 	Fonte            string
+	start_at         int64
 }
 
 const (
@@ -22,6 +24,8 @@ func NewPolicyTolken() *Policy {
 	widowsRequest := os.Getenv("REQUEST_PER_WINDOW")
 	tll := os.Getenv("TOLKEN_EXPIRATION")
 
+	start := time.Now().Unix()
+
 	requestNumber, _ := strconv.Atoi(request)
 	widowsRequestNumber, _ := strconv.Atoi(widowsRequest)
 	tllNumber, _ := strconv.Atoi(tll)
@@ -31,6 +35,7 @@ func NewPolicyTolken() *Policy {
 		WindowPerSecond:  int64(widowsRequestNumber),
 		RequestPerSecond: int64(requestNumber),
 		TTL:              int64(tllNumber),
+		start_at:         start,
 	}
 }
 
@@ -38,6 +43,8 @@ func NewPolicyIP() *Policy {
 	request := os.Getenv("REQUEST_PER_SECOND_IP")
 	widowsRequest := os.Getenv("REQUEST_PER_WINDOW")
 	tll := os.Getenv("TOLKEN_EXPIRATION")
+
+	start := time.Now().Unix()
 
 	requestNumber, _ := strconv.Atoi(request)
 	widowsRequestNumber, _ := strconv.Atoi(widowsRequest)
@@ -48,5 +55,10 @@ func NewPolicyIP() *Policy {
 		WindowPerSecond:  int64(widowsRequestNumber),
 		RequestPerSecond: int64(requestNumber),
 		TTL:              int64(tllNumber),
+		start_at:         start,
 	}
+}
+
+func (p *Policy) GetTimeStartad() int64 {
+	return p.start_at
 }

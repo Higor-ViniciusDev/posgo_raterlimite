@@ -35,7 +35,8 @@ func (t *Tolken) GetTolkenString() (string, *internal_error.InternalError) {
 	return retorno, nil
 }
 
-type TolkenInterface interface {
-	Save(ctx context.Context, tolkenEntity *Tolken, policy *policy_entity.Policy)
-	GetTolkenByID(ctx context.Context, tolkenID string) (*jwtauth.JWTAuth, *internal_error.InternalError)
+type TolkenRepositoryInterface interface {
+	Save(ctx context.Context, tolkenID string, policy *policy_entity.Policy) *internal_error.InternalError
+	FindPolicyByTolken(ctx context.Context, tolkenID string) (*policy_entity.Policy, *internal_error.InternalError)
+	DeleteInfoByTolken(ctx context.Context, tolkenID string) *internal_error.InternalError
 }

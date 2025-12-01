@@ -14,7 +14,7 @@ func init() {
 		Level:            zap.NewAtomicLevelAt(zap.InfoLevel),
 		Encoding:         "json",
 		OutputPaths:      []string{"stdout", "./tmp/log/info.log"},
-		ErrorOutputPaths: []string{"stderr", "./tmp/log/error.log"},
+		ErrorOutputPaths: []string{"stdout", "./tmp/log/error.log"},
 		EncoderConfig: zapcore.EncoderConfig{
 			MessageKey:   "message",
 			LevelKey:     "level",

@@ -30,6 +30,9 @@ func NewBadRequestError(message string) *InternalError {
 	}
 }
 
-const (
-	NotFoundError = "not_found"
-)
+func NewManyRequestError(message string) *InternalError {
+	return &InternalError{
+		Message: message,
+		Err:     "many_request",
+	}
+}

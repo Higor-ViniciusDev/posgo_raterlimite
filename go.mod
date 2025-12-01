@@ -3,8 +3,8 @@ module github.com/Higor-ViniciusDev/posgo_raterlimite
 go 1.24.1
 
 require (
+	github.com/go-chi/chi/v5 v5.2.3
 	github.com/go-chi/jwtauth v1.2.0
-	github.com/go-redis/redis_rate/v10 v10.0.1
 	github.com/joho/godotenv v1.5.1
 	github.com/redis/go-redis/v9 v9.17.1
 	go.uber.org/zap v1.27.1

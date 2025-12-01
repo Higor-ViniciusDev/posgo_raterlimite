@@ -1,9 +1,11 @@
 package database
 
 import (
+	"context"
 	"fmt"
 	"os"
 
+	"github.com/Higor-ViniciusDev/posgo_raterlimite/configuration/logger"
 	"github.com/redis/go-redis/v9"
 )
 
@@ -16,6 +18,11 @@ func NewConnectionRedis() *redis.Client {
 		Password: "", // no password set
 		DB:       0,  // use default DB
 	})
+
+	if err := rdb.Ping(context.Background()).Err(); err != nil {
+		logger.Error("Falha ao conectar ao Redis", err)
+		panic(fmt.Sprintf("Falha ao conectar ao Redis: %v", err))
+	}
 
 	return rdb
 }
