@@ -19,15 +19,15 @@ type TolkenOutputDTO struct {
 	Tolken string `json:"tolken"`
 }
 
-func NewTolkenUsecase(tolkenRepository tolken_entity.TolkenRepositoryInterface) *TolkenUsecase {
+func NewTolkenUsecase(tolkenRepository tolken_entity.TolkenRepositoryInterface, expire expire_usecase.ExpirerInterface) *TolkenUsecase {
 	return &TolkenUsecase{
 		TolkenRepository: tolkenRepository,
+		Expirer:          expire,
 	}
 }
 
 type TolkenUsecaseInterface interface {
 	CreateTolken(ctx context.Context) (*TolkenOutputDTO, *internal_error.InternalError)
-	// Validate(ctx context.Context, tolkenID string) *internal_error.InternalError
 }
 
 func (tl *TolkenUsecase) CreateTolken(ctx context.Context) (*TolkenOutputDTO, *internal_error.InternalError) {

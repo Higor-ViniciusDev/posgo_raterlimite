@@ -11,7 +11,7 @@ type Policy struct {
 	WindowPerSecond  int64
 	TTL              int64
 	Fonte            string
-	start_at         int64
+	start_at         int64 //Pensei que por ser um valor um importante deixar ele privado para que não seja alterado depois da criação
 }
 
 const (
@@ -61,4 +61,9 @@ func NewPolicyIP() *Policy {
 
 func (p *Policy) GetTimeStartad() int64 {
 	return p.start_at
+}
+
+// SetStartAt define o tempo inicial (usado ao ler do armazenamento)
+func (p *Policy) SetStartAt(t int64) {
+	p.start_at = t
 }

@@ -39,14 +39,16 @@ func main() {
 func initDependeces(redisCli *redis.Client) (controller.TolkenController, policy_usecase.PolicyUsecase) {
 	var tolkenController controller.TolkenController
 
+	expirerUsecase := expire_usecase.NewDefaultExpirer()
+
 	//Tolken dependeces
 	tolkeRepository := db_infra.NewTolkenDB(redisCli)
-	tolkenUsecase := tolken_usecase.NewTolkenUsecase(tolkeRepository)
+	tolkenUsecase := tolken_usecase.NewTolkenUsecase(tolkeRepository, expirerUsecase)
 	tolkenController = *controller.NewTolkenController(tolkenUsecase)
 
 	requestRespository := db_infra.NewRequestInfoRepository(redisCli)
-	expirerUsecase := expire_usecase.NewDefaultExpirer()
-	policyUsecase := policy_usecase.NewPolicyUsecase(expirerUsecase, tolkeRepository, requestRespository)
 
-	return tolkenController, *policyUsecase
+	policyUsecase := *policy_usecase.NewPolicyUsecase(expirerUsecase, tolkeRepository, requestRespository)
+
+	return tolkenController, policyUsecase
 }

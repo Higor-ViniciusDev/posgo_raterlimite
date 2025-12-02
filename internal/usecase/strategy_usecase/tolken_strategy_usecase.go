@@ -45,7 +45,7 @@ func (ts *TolkenStrategyUsecase) Validate(ctx context.Context, key string) *inte
 	}
 
 	if infoRequest == nil {
-		err := ts.RequestInfo.CreateRequestInfo(ctx, key)
+		err := ts.RequestInfo.CreateRequestInfo(ctx, key, tolkeRequest)
 
 		if err != nil {
 			logger.Error("Error in created request info validation", err)
@@ -73,13 +73,13 @@ func (ts *TolkenStrategyUsecase) Validate(ctx context.Context, key string) *inte
 			time.Duration(desbloqueadInt)*time.Second,
 			func() {
 				ts.RequestInfo.DeleteBloqueadRequestByKey(context.Background(), key)
-				ts.RequestInfo.UpdateRequestInfo(ctx, key, "QuantityRequest", 0)
+				ts.RequestInfo.UpdateRequestInfo(ctx, key, "quantityRequest", 0)
 			},
 		)
 
 		return internal_error.NewManyRequestError("you have reached the maximum number of requests or actions allowed within a certain time frame")
 	}
-	_ = ts.RequestInfo.UpdateRequestInfo(ctx, key, "QuantityRequest", infoRequest.QuantityRequest+1)
+	_ = ts.RequestInfo.UpdateRequestInfo(ctx, key, "quantityRequest", infoRequest.QuantityRequest+1)
 
 	return nil
 }

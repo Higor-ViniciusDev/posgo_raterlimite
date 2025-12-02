@@ -2,6 +2,7 @@ package tolken_entity
 
 import (
 	"context"
+	"math/rand"
 	"os"
 
 	"github.com/Higor-ViniciusDev/posgo_raterlimite/internal/entity/policy_entity"
@@ -24,8 +25,9 @@ func NewTolken() *Tolken {
 }
 
 func (t *Tolken) GetTolkenString() (string, *internal_error.InternalError) {
+	randomID := rand.Int63()
 	_, retorno, err := t.TokenAuth.Encode(map[string]interface{}{
-		"sub": 1,
+		"sub": randomID,
 	})
 
 	if err != nil {
